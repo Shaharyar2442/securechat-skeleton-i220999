@@ -6,18 +6,16 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.backends import default_backend
 from cryptography.exceptions import InvalidSignature
 
-def load_private_key(key_file):
-    """Loads a PEM-encoded private key."""
+def load_private_key(key_file): #Function to load an RSA private key from a PEM file
     with open(key_file, "rb") as f:
         private_key = serialization.load_pem_private_key(
             f.read(),
-            password=None, # Assuming no password for entity keys
+            password=None, 
             backend=default_backend()
         )
     return private_key
 
-def sign_data(private_key, data):
-    """Signs data using RSA-PSS with SHA-256."""
+def sign_data(private_key, data): #Function to create RSA-PSS signature
     if isinstance(data, str):
         data = data.encode('utf-8')
         
@@ -31,8 +29,7 @@ def sign_data(private_key, data):
     )
     return signature
 
-def verify_signature(public_key, signature, data):
-    """Verifies an RSA-PSS SHA-256 signature."""
+def verify_signature(public_key, signature, data): #Function to verify RSA-PSS signature
     if isinstance(data, str):
         data = data.encode('utf-8')
         
